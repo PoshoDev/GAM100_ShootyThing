@@ -1,0 +1,8 @@
+TextContent = 
+{
+	ZilchScriptBuilder = 
+	{
+		string Name = "ScrSeed",
+		uint64 ResourceId = 59e9bce8ed754a85,
+	},
+},

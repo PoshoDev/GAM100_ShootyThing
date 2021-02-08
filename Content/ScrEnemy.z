@@ -1,0 +1,41 @@
+class ScrEnemy : ZilchComponent
+{
+    var RandomGenerator : Random = Random();
+    var Dir_X: Real = 0;
+    var Dir_Y: Real = 0;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+        
+        this.Dir_X = (this.RandomGenerator.DieRoll(2) - 2);
+        this.Dir_Y = (this.RandomGenerator.DieRoll(2) - 2);
+        
+        if (this.Dir_X == 0 && this.Dir_Y == 0)
+            {
+            this.Dir_X = 1;
+            }
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    var moveDirection = Real3(this.Dir_X/10, this.Dir_Y/10, 0.0);
+    this.Owner.Transform.Translation += moveDirection;
+    }
+    
+    function OnCollisionStarted(event: CollisionEvent)
+        {
+        if (event.OtherObject.Name == "Solid")
+            {
+            this.Dir_X *= -1;
+            this.Dir_Y = (this.RandomGenerator.DieRoll(2) - 2);
+            }
+            
+        if (event.OtherObject.Name == "Solid_Y" || event.OtherObject.Name == "Soil")
+            {
+            this.Dir_Y *= -1;
+            this.Dir_X = (this.RandomGenerator.DieRoll(2) - 2);
+            }
+        }
+}

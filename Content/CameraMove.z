@@ -1,0 +1,17 @@
+class CameraMove : ZilchComponent
+{
+    [Property]
+    var Theplayer: CogPath = null;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+        var player_pos = this.Theplayer.DirectCog.Transform.Translation;
+        player_pos.Z = this.Owner.Transform.Translation.Z;
+        this.Owner.Transform.Translation = player_pos;
+    }
+}

@@ -1,0 +1,33 @@
+class ScrSeed : ZilchComponent
+{
+    var Progress: Real = 0;
+    
+    function Initialize(init : CogInitializer)
+    {
+        Zero.Connect(this.Space, Events.LogicUpdate, this.OnLogicUpdate);
+        Zero.Connect(this.Owner, Events.CollisionStarted, this.OnCollisionStarted);
+    }
+
+    function OnLogicUpdate(event : UpdateEvent)
+    {
+    }
+    
+    function OnCollisionStarted(event: CollisionEvent)
+        {
+        
+        if (event.OtherObject.Name == "Bullet")
+            {
+            this.Progress += 1;
+            event.OtherObject.Destroy();
+            
+            if (this.Progress >= 100)
+                {
+                this.Owner.Destroy();
+                }
+            else if (this.Progress == 14 || this.Progress == 28 || this.Progress == 42 || this.Progress == 56 || this.Progress == 70 || this.Progress == 84 || this.Progress == 98 )
+                {
+                this.Owner.Sprite.CurrentFrame += 1;
+                }
+            }
+        }
+}
